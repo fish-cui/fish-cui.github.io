@@ -24,16 +24,16 @@
 <meta name="keywords" content="思考,跳槽">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2020求职感悟">
-<meta property="og:url" content="https://fish-cui.github.io/2020/04/27/2020求职感悟/index.html">
+<meta property="og:url" content="https://fish-cui.github.io/post/2020_think_in_job-hopping/index.html">
 <meta property="og:site_name" content="愚者的菜园">
 <meta property="og:description" content="2020：告别与展望最近终于拿到了阿里、头条以及花旗银行的offer，回顾这半年以来的求职历程，从本以为的手到擒来，到屡战屡败，再到最后的拨云见日，真是五味陈杂。特此记录一下对跳槽这件事的感悟，算是一个总结，也希望能对其他想要跳槽的小伙伴一点启示。 决定跳槽这是跳槽整个流程中最最最重要的一步！！！在做任何事之前，我们都要想清楚为什么要做这件事。因为如果方向错了，越努力只会越偏离目的地。放到跳槽这件">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-05-10T10:46:44.074Z">
+<meta property="og:updated_time" content="2020-05-11T11:53:46.495Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2020求职感悟">
 <meta name="twitter:description" content="2020：告别与展望最近终于拿到了阿里、头条以及花旗银行的offer，回顾这半年以来的求职历程，从本以为的手到擒来，到屡战屡败，再到最后的拨云见日，真是五味陈杂。特此记录一下对跳槽这件事的感悟，算是一个总结，也希望能对其他想要跳槽的小伙伴一点启示。 决定跳槽这是跳槽整个流程中最最最重要的一步！！！在做任何事之前，我们都要想清楚为什么要做这件事。因为如果方向错了，越努力只会越偏离目的地。放到跳槽这件">
 
-<link rel="canonical" href="https://fish-cui.github.io/2020/04/27/2020求职感悟/">
+<link rel="canonical" href="https://fish-cui.github.io/post/2020_think_in_job-hopping/">
 
 
 <script id="page-configurations">
@@ -156,7 +156,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://fish-cui.github.io/2020/04/27/2020求职感悟/">
+    <link itemprop="mainEntityOfPage" href="https://fish-cui.github.io/post/2020_think_in_job-hopping/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -186,10 +186,17 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-10 18:46:44" itemprop="dateModified" datetime="2020-05-10T18:46:44+08:00">2020-05-10</time>
+                <time title="Modified: 2020-05-11 19:53:46" itemprop="dateModified" datetime="2020-05-11T19:53:46+08:00">2020-05-11</time>
               </span>
 
-          <br>
+          
+            <span id="/post/2020_think_in_job-hopping/" class="post-meta-item leancloud_visitors" data-flag-title="2020求职感悟" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span><br>
             <span class="post-meta-item" title="Symbols count in article">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
@@ -439,6 +446,92 @@
 
 
 
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"cEV8URpTH31WKLTjfy6opigl-gzGzoHsz","app_key":"OwG71qYz3MhDyISSzG8YYFVQ","server_url":null,"security":true};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
 
 
       </div>
@@ -486,7 +579,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       repo        : 'blog_comment',
       owner       : 'fish-cui',
       admin       : ['fish-cui'],
-      id          : '02804d0e08e6014d976a29487a8738a5',
+      id          : '283b3198404904a561a6d4ac9f01152d',
         language: 'zh-CN',
       distractionFreeMode: true
     });
